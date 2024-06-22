@@ -3,26 +3,35 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use DateTimeInterface;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, InteractsWithMedia;
+    public const AVATAR_COLLECTION_NAME = "avatar";
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'nom',
         'prenom',
         'telephone',
         'email',
-        'mot_de_passe',
+        'password',
+        'is_active',
+        'can_login',
+        'otp',
+        'email_verified_at',
+        'account_set_token',
+        'account_set_token_created_at',
+        'password_reset_token',
+        'password_reset_token_created_at',
     ];
 
     /**
@@ -31,8 +40,22 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'mot_de_passe',
+        'password',
         'remember_token',
+        'email_verified_at',
+
+        'otp',
+        'otp_created_at',
+
+        'account_set_token',
+        'account_set_token_created_at',
+
+        'password_reset_token',
+        'password_reset_token_created_at',
+    ];
+    protected $appends = [
+        'fullname',
+        'avatar'
     ];
 
     /**
@@ -42,6 +65,35 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'mot_de_passe' => 'hashed',
+        'password' => 'hashed',
+
+        'otp' => 'hashed',
+
+        'account_set_token' => 'hashed',
+        'account_set_token_created_at' => 'datetime',
+
+        'password_reset_token' => 'hashed',
+        'password_reset_token_created_at' => 'datetime',
     ];
+
+    public function getAvatarAttribute()
+    {
+      return $this->getFirstMedia(User::AVATAR_COLLECTION_NAME);
+    }
+
+    public function roles()
+    {
+      return $this->belongsToMany(Role::class);
+    }
+
+    public function getFullnameAttribute()
+    {
+      return $this->nom . ' ' . $this->prenom;
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+      return $date->format(config('panel.datetime_format'));
+    }
+
 }

@@ -21,18 +21,26 @@ class PermissionSeeder extends Seeder
         $controller = Role::CONTROLLER_ROLE_ALIAS;
         $client = Role::CLIENT_ROLE_ALIAS;
 
-        $permission = [
+        $permissions = [
 
             ...$this->createPermissions('permission', ['create', 'edit', 'delete', 'manage'], $admins),
             ...$this->createPermissions('permission', ['show', 'access', 'search', 'list'], $everybody),
 
+            ...$this->createPermissions('app_configuration', ['create', 'edit', 'delete', 'access'], $admins),
+            ...$this->createPermissions('app_configuration', ['show', 'search', 'list'], $everybody),
+
             ...$this->createPermissions('role', ['create', 'edit', 'delete', 'manage'], $admins),
             ...$this->createPermissions('role', ['show', 'access', 'search', 'list'], $everybody),
+
+            ...$this->createPermissions('user', ['access', 'create', 'edit', 'delete', 'history_access'], $admin),
+            ...$this->createPermissions('user', ['show'], $everybody),
+
 
 
         ];
 
-        Permission::insert($permission);
+        Permission::insert($permissions);
+
     }
 
     public function createPermissions($resource, $permissions, $default_roles = [], $module = null)

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Permission extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     public $table = 'permissions';
 
@@ -26,7 +26,7 @@ class Permission extends Model
       self::ACTION_ACTIVATE,
       self::ACTION_DESACTIVATE
     ];
-    
+
   public $casts = [
     'default_roles' => 'array'
 ];
