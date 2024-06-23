@@ -26,18 +26,18 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nom" => "required|string|max:255",
-            "prenom" => "required|string|max:255",
-            "email" => "required|string|email|max:255|unique:users,email",
-            "telephone" => "required|string|max:255|unique:users,telephone",
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'telephone' => 'required|string|max:255|unique:users,telephone',
 
-            "role_ids" => "array|nullable",
-            "role_ids.*" => "integer|exists:roles,id",
+            'role_ids' => 'array|nullable',
+            'role_ids.*' => 'integer|exists:roles,id',
 
-            "roles" => "array|nullable",
-            "roles.*" => "string|exists:roles,alias",
+            'roles' => 'array|nullable',
+            'roles.*' => 'string|exists:roles,alias',
 
-            "avatar" => "nullable|file|max:7000"
+            'avatar' => 'nullable|file|max:7000'
         ];
     }
 }

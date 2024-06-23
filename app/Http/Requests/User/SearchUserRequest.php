@@ -14,7 +14,7 @@ class SearchUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('user_search');
+        return Gate::allows('user_access');
     }
 
     /**
@@ -25,23 +25,23 @@ class SearchUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'periode' => "nullable|array",
-            'periode.from' => "nullable|date",
-            'periode.to' => "nullable|date",
+            'periode' => 'nullable|array',
+            'periode.from' => 'nullable|date',
+            'periode.to' => 'nullable|date',
 
-            'email' => "nullable|string|max:255",
-            'telephone' => "nullable|string|max:255",
-            'nom' => "nullable|string|max:255",
-            'prenom' => "nullable|string|max:255",
-            'fullname' => "nullable|string|max:255",
+            'email' => 'nullable|string|max:255',
+            'telephone' => 'nullable|string|max:255',
+            'nom' => 'nullable|string|max:255',
+            'prenom' => 'nullable|string|max:255',
+            'fullname' => 'nullable|string|max:255',
 
-            'role_ids' => "array|nullable",
-            'role_ids.*' => "required|exists:roles,id",
+            'role_ids' => 'array|nullable',
+            'role_ids.*' => 'required|exists:roles,id',
 
-            'roles' => "array|nullable",
-            'roles.*' => "required|exists:roles,alias",
+            'roles' => 'array|nullable',
+            'roles.*' => 'required|exists:roles,alias',
 
-            'per_page' => "nullable|numeric|max:100",
+            'per_page' => 'nullable|numeric|max:100',
         ];
     }
 }

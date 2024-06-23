@@ -12,7 +12,7 @@ use App\Http\Requests\Categorie\UpdateCategorieRequest;
 
 class CategorieController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $per_page = ($request->per_page > 100) ? 10 : $request->per_page;
@@ -30,7 +30,7 @@ class CategorieController extends Controller
 
         if($titre){
 
-            $categories = $categories->where('titre', 'ILIKE', '%'.$titre.'%');
+            $categories = $categories->where('titre', 'LIKE', '%'.$titre.'%');
         }
 
         return CategorieResource::collection($categories->paginate($per_page));

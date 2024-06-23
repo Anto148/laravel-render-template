@@ -58,27 +58,27 @@ class UsersController extends Controller
 
         if($email)
         {
-            $users = $users->where('email', 'ILIKE', '%'.$email.'%');
+            $users = $users->where('email', 'LIKE', '%'.$email.'%');
         }
 
         if($telephone)
         {
-            $users = $users->where('telephone', 'ILIKE', '%'.$telephone.'%');
+            $users = $users->where('telephone', 'LIKE', '%'.$telephone.'%');
         }
 
         if($nom)
         {
-            $users = $users->where('nom', 'ILIKE', '%'.$nom.'%');
+            $users = $users->where('nom', 'LIKE', '%'.$nom.'%');
         }
 
         if($prenom)
         {
-            $users = $users->where('prenom', 'ILIKE', '%'.$prenom.'%');
+            $users = $users->where('prenom', 'LIKE', '%'.$prenom.'%');
         }
 
         if($fullname)
         {
-            $users = $users->orWhere('prenom', 'ILIKE', '%'.$prenom.'%')->where('prenom', 'ILIKE', '%'.$prenom.'%');
+            $users = $users->orWhere('prenom', 'LIKE', '%'.$prenom.'%')->where('prenom', 'LIKE', '%'.$prenom.'%');
         }
 
         if($roles)

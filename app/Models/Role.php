@@ -24,7 +24,7 @@ class Role extends Model
     public const ADMINS_ROLE_ALIASES = [
         self::ADMIN_ROLE_ALIAS,
         self::CONTROLLER_ROLE_ALIAS
-    ];
+    ];  
 
     public $table = 'roles';
 

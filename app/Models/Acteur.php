@@ -2,10 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use DateTimeInterface;
+use Illuminate\Process\Exceptions\ProcessTimedOutException;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Acteur extends Model
+class Acteur extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
+
+    public $table = "acteurs";
+
+    protected $fillable = [
+        'nom',
+        'prenom',
+    ];
+
+    protected $appends = [
+        'fullname'
+    ];
+
+    public function getFullnameAttribute()
+    {
+        return $this->nom.' '.$this->prenom;
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+      return $date->format(config('panel.datetime_format'));
+    }
 }
