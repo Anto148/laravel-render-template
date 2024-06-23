@@ -35,9 +35,8 @@ class CategorieController extends Controller
 
         return CategorieResource::collection($categories->paginate($per_page));
     }
-    /**
-     * Store a newly created resource in storage.
-     */
+    
+
     public function store(StoreCategorieRequest $request)
     {
         $categorie = Categorie::create($request->all());
@@ -47,9 +46,7 @@ class CategorieController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Categorie $categorie)
     {
         $this->checkGate('categorie_show');
@@ -57,9 +54,7 @@ class CategorieController extends Controller
         return new CategorieResource($categorie);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
         $categorie->update($request->all());

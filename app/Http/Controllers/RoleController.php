@@ -15,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Permission\PermissionListResource;
 
 class RoleController extends Controller
-{ public function index()
+{
+    public function index()
     {
         $this->checkGate('role_access');
 
