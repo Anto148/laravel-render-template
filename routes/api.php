@@ -1,14 +1,15 @@
 <?php
 
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ActeurController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AppConfigurationController;
-use App\Http\Controllers\CategorieController;
-use App\Models\Categorie;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +35,15 @@ Route::get('app-configurations', [AppConfigurationController::class, 'index'])->
 Route::get('app-configurations/{app_configuration}', [AppConfigurationController::class, 'show'])->name('app-configurations.show');
 Route::post('app-configurations/search', [AppConfigurationController::class, 'search'])->name('app-configurations.search');
 
-
+// Categories
 Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
 Route::get('categories/{category}', [CategorieController::class, 'show'])->name('categories.show');
 Route::post('categories/search', [CategorieController::class, 'search'])->name('categories.search');
+
+// Acteurs
+Route::get('acteurs', [ActeurController::class, 'index'])->name('acteurs.index');
+Route::get('acteurs/{auteur}', [ActeurController::class, 'show'])->name('acteurs.show');
+Route::post('acteurs/search', [ActeurController::class, 'acteurs_search'])->name('acteurs.search');
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
