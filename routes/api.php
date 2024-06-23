@@ -7,6 +7,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AppConfigurationController;
+use App\Http\Controllers\CategorieController;
+use App\Models\Categorie;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,12 @@ Route::get('app-configurations', [AppConfigurationController::class, 'index'])->
 Route::get('app-configurations/{app_configuration}', [AppConfigurationController::class, 'show'])->name('app-configurations.show');
 Route::post('app-configurations/search', [AppConfigurationController::class, 'search'])->name('app-configurations.search');
 
+
+Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
+Route::get('categories/{category}', [CategorieController::class, 'show'])->name('categories.show');
+Route::post('categories/search', [CategorieController::class, 'search'])->name('categories.search');
+
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // User
@@ -46,5 +54,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Permmission
     Route::apiResource('permissions', PermissionController::class);
     Route::post('permissions/search', [PermissionController::class, 'search'])->name('permissions.search');
+
 
 });

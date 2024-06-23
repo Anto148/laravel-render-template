@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('limite_age')->nullable();
             $table->float('moyenne_note')->nullable();
             $table->string('audio')->nullable();
+            $table->foreignId('realisateur_id')->constrained('realisateurs');
+            $table->foreignId('acteurs_id')->constrained('acteurs');
             $table->foreignId('categorie_id')->constrained('categories');
             $table->timestamps();
             $table->softDeletes();

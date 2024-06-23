@@ -35,7 +35,8 @@ class PermissionSeeder extends Seeder
             ...$this->createPermissions('user', ['access', 'create', 'edit', 'delete', 'history_access'], $admin),
             ...$this->createPermissions('user', ['show'], $everybody),
 
-
+            ...$this->createPermissions('categorie', ['access', 'show','search'], $everybody),
+            ...$this->createPermissions('categorie', ['create', 'edit', 'delete'], $admins),
 
         ];
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('qte');
             $table->boolean('retrait_commodite');
-            $table->foreignId('ticket_id')->constrained('tickets')->onDelete('cascade');
+            // $table->foreignId('ticket_id')->constrained('tickets')->onDelete('cascade');
             $table->foreignId('commodite_id')->constrained('commodites');
             $table->timestamps();
         });

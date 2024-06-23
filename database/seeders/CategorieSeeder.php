@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Categorie;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CategorieSeeder extends Seeder
 {
@@ -12,6 +13,19 @@ class CategorieSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $categories = [
+           ['titre' => 'Action'],
+            ['titre' => 'Comédie'],
+            ['titre' => 'Drame'],
+            ['titre' => 'Horreur'],
+            ['titre' => 'Science-fiction'],
+            ['titre' => 'Documentaire'],
+            ['titre' => 'Animation'],
+            ['titre' => 'Aventure'],
+            ['titre' => 'Romance'],
+            ['titre' => 'Fantastique'],
+        ];
+
+        Categorie::insert($categories);
     }
 }
