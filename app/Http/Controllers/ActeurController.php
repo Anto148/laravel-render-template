@@ -7,23 +7,36 @@ use Illuminate\Http\Request;
 use App\Http\Resources\Acteur\ActeurResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Acteur\StoreActeurRequest;
+use App\Http\Requests\Acteur\SearchActeurRequest;
 use App\Http\Requests\Acteur\UpdateActeurRequest;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 class ActeurController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $per_page = ($request->per_page > 100) ? 10 : $request->per_page;
 
         return ActeurResource::collection(Acteur::paginate($per_page));
     }
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    public function search(SearchActeurRequest $request)
+    {
+
+        $titre = $request->titre;
+        $per_page = ($request->per_page > 100) ? 10 : $request->per_page;
+
+        $acteurs = Acteur::query()->orderByDesc('created_at');
+
+        if($titre){
+
+            $acteurs = $acteurs->where('titre', 'LIKE', '%'.$titre.'%');
+        }
+
+        return ActeurResource::collection($acteurs->paginate($per_page));
+    }
+
     public function store(StoreActeurRequest $request)
     {
         $acteur = Acteur::create($request->all());
@@ -34,9 +47,7 @@ class ActeurController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Acteur $acteur)
     {
         $this->checkGate('acteur_show');
@@ -44,9 +55,7 @@ class ActeurController extends Controller
         return new ActeurResource($acteur);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateActeurRequest $request, Acteur $acteur)
     {
         $acteur->update($request->all());
@@ -56,9 +65,7 @@ class ActeurController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Acteur $acteur)
     {
         $this->checkGate('acteur_destroy');

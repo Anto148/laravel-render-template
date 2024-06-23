@@ -4,62 +4,72 @@ namespace App\Http\Controllers;
 
 use App\Models\Realisateur;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\Realisateur\RealisateurResource;
+use App\Http\Requests\Realisateur\StoreRealisateurRequest;
+use App\Http\Requests\Realisateur\SearchRealisateurRequest;
+use App\Http\Requests\Realisateur\UpdateRealisateurRequest;
 
 class RealisateurController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $per_page = ($request->per_page > 100) ? 10 : $request->per_page;
+
+        return RealisateurResource::collection(Realisateur::paginate($per_page));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function search(SearchRealisateurRequest $request)
     {
-        //
+
+        $titre = $request->titre;
+        $per_page = ($request->per_page > 100) ? 10 : $request->per_page;
+
+        $realisateurs = Realisateur::query()->orderByDesc('created_at');
+
+        if($titre){
+
+            $realisateurs = $realisateurs->where('titre', 'LIKE', '%'.$titre.'%');
+        }
+
+        return RealisateurResource::collection($realisateurs->paginate($per_page));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreRealisateurRequest $request)
     {
-        //
+        $realisateur = Realisateur::create($request->all());
+
+        return (new RealisateurResource($realisateur))
+        ->response()
+        ->setStatusCode(Response::HTTP_CREATED);
+
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Realisateur $realisateur)
     {
-        //
+        $this->checkGate('realisateur_show');
+
+        return new RealisateurResource($realisateur);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Realisateur $realisateur)
+
+    public function update(UpdateRealisateurRequest $request, Realisateur $realisateur)
     {
-        //
+        $realisateur->update($request->all());
+
+        return (new RealisateurResource($realisateur))
+            ->response()
+            ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Realisateur $realisateur)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Realisateur $realisateur)
     {
-        //
+        $this->checkGate('realisateur_destroy');
+
+        $realisateur->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

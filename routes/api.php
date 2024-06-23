@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Categorie;
+use App\Models\Realisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ActeurController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RealisateurController;
 use App\Http\Controllers\AppConfigurationController;
 
 /*
@@ -44,6 +46,11 @@ Route::post('categories/search', [CategorieController::class, 'search'])->name('
 Route::get('acteurs', [ActeurController::class, 'index'])->name('acteurs.index');
 Route::get('acteurs/{auteur}', [ActeurController::class, 'show'])->name('acteurs.show');
 Route::post('acteurs/search', [ActeurController::class, 'acteurs_search'])->name('acteurs.search');
+
+// Realisateurs
+Route::get('realisateurs', [RealisateurController::class, 'index'])->name('realisateurs.index');
+Route::get('realisateurs/{realisateur}', [RealisateurController::class, 'show'])->name('realisateurs.show');
+Route::post('realisateurs/search', [RealisateurController::class, 'search'])->name('realisateurs.search');
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {

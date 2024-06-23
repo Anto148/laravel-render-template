@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Acteur;
+namespace App\Http\Requests\Realisateur;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchActeurRequest extends FormRequest
+class SearchRealisateurRequest extends FormRequest
 {
-   /**
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Gate::allows('acteur_create');
+        return true;
     }
 
     /**
@@ -23,9 +22,8 @@ class SearchActeurRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => 'nullable|string|max:255',
-            'prenom' => 'nullable|string|max:255',
-            'per_page' => 'nullable|integer',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
         ];
     }
 }

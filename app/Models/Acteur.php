@@ -26,7 +26,7 @@ class Acteur extends Model implements HasMedia
 
     public function getFullnameAttribute()
     {
-        return $this->nom.' '.$this->prenom;
+        return $this->prenom.' '.$this->nom;
     }
 
     protected function serializeDate(DateTimeInterface $date)

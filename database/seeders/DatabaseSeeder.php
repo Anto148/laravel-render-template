@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             PermissionRoleSeeder::class,
             UserSeeder::class,
             AppConfigurationSeeder::class,
-            CategorieSeeder::class
+            CategorieSeeder::class,
+            ActeurSeeder::class,
+            RealisateurSeeder::class
         ]);
     }
 }
