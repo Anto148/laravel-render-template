@@ -29,6 +29,7 @@ class FilmShowResource extends JsonResource
             'categorie_id' => $this->category_id,
             'categories' => CategorieResource::collection($this->whenLoaded('categories')),
             'realisateurs' => RealisateurResource::collection($this->whenLoaded('realisateurs')),
+            'moyenne_note' => $this->moyenne_note,
             'acteurs' => ActeurResource::collection($this->whenLoaded('acteurs')),
             'created_at' => $this->created_at?->format(config('panel.datetime_format')),
             'updated_at' => $this->updated_at?->format(config('panel.datetime_format')),
