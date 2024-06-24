@@ -3,7 +3,10 @@
 namespace App\Http\Resources\Film;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\Acteur\ActeurResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Categorie\CategorieResource;
+use App\Http\Resources\Realisateur\RealisateurResource;
 
 class FilmListResource extends JsonResource
 {
@@ -25,7 +28,9 @@ class FilmListResource extends JsonResource
             'cover' => $this->cover,
             'bande_annonce' => $this->bande_annonce,
             'categorie_id' => $this->category_id,
-            'categories' => $this->categories,
+            'categories' => CategorieResource::collection($this->whenLoaded('categories')),
+            'realisateurs' => RealisateurResource::collection($this->whenLoaded('realisateurs')),
+            'acteurs' => ActeurResource::collection($this->whenLoaded('acteurs')),
             'created_at' => $this->created_at?->format(config('panel.datetime_format')),
             'updated_at' => $this->updated_at?->format(config('panel.datetime_format')),
         ];

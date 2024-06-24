@@ -18,7 +18,7 @@ class FilmController extends Controller
     {
         // $this->checkGate('film_access');
 
-        return FilmListResource::collection($request->per_page ? Film::with('realisateurs', 'acteurs', 'categories',)->orderByDesc('created_at')->paginate($request->per_page) : Film::orderByDesc('created_at')->get());
+        return FilmListResource::collection($request->per_page ? Film::with(['realisateurs', 'acteurs', 'categories'])->orderByDesc('created_at')->paginate($request->per_page) : Film::with(['realisateurs', 'acteurs', 'categories'])->orderByDesc('created_at')->get());
 
     }
 

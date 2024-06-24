@@ -37,7 +37,6 @@ class UsersController extends Controller
         $roles = $request->roles;
         $per_page = $request->per_page ?? 10;
 
-
         $users = User::query()->with(['roles']);
 
         if($periode)
@@ -78,7 +77,7 @@ class UsersController extends Controller
 
         if($fullname)
         {
-            $users = $users->orWhere('prenom', 'LIKE', '%'.$prenom.'%')->where('prenom', 'LIKE', '%'.$prenom.'%');
+            $users = $users->orWhere('prenompe', 'LIKE', '%'.$prenom.'%')->where('prenom', 'LIKE', '%'.$prenom.'%');
         }
 
         if($roles)
