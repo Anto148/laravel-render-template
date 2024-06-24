@@ -18,14 +18,14 @@ class ProjectionListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'date_projection' => $this->date_projection->format('y-m-d H:i:s'),
+            'date_projection' => $this->date_projection->format('d-m-y'),
             'heure_projection' => $this->heure_projection,
             'en_3d' => $this->en_3d,
             'film' => new FilmListResource($this->whenLoaded('film')),
             // 'salle_id' => $this->salle_id,
             'type_projection' => new TypeProjectionResource($this->whenLoaded('typeProjection')),
-            'created_at' => $this->created_at?->format('y-m-d H:i:s'),
-            'updated_at' => $this->updated_at?->format('y-m-d H:i:s'),
+            'created_at' => $this->created_at?->format('d-m-y H:i:s'),
+            'updated_at' => $this->updated_at?->format('d-m-y H:i:s'),
         ];
     }
 }

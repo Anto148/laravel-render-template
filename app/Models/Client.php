@@ -24,8 +24,6 @@ class Client extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
-
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format(config('panel.datetime_format'));

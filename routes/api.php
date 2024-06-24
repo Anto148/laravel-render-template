@@ -69,7 +69,7 @@ Route::post('type-projections/search', [TypeProjectionController::class, 'search
 Route::get('projections', [ProjectionController::class, 'index'])->name('projections.index');
 Route::get('projections/{projection}', [ProjectionController::class, 'show'])->name('projections.show');
 Route::post('projections/search', [ProjectionController::class, 'search'])->name('projections.search');
-
+Route::post('projections/week',[ProjectionController::class, 'projectionsDeLaSemaine'])->name('projections.week');
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
