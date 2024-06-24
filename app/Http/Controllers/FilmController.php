@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Film;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Film\StoreFilmRequest;
 use App\Http\Requests\Film\SearchFilmRequest;
 use App\Http\Requests\Film\UpdateFilmRequest;
@@ -25,6 +26,9 @@ class FilmController extends Controller
     public function search(SearchFilmRequest $request){
 
         $titre = $request->titre;
+        $acteurs = $request->acteurs;
+        $realisateurs = $request->realisateurs;
+        $categories = $request->categories;
         $per_page = $request->per_page ?? 10;
 
         $films = Film::with(['realisateurs', 'acteurs', 'categories'])->orderByDesc('created_at');
@@ -32,6 +36,38 @@ class FilmController extends Controller
         if($titre){
 
             $films = $films->where('titre', 'LIKE', '%'.$titre.'%');
+        }
+
+        if($acteurs){
+
+            $films = $films->whereHas('acteurs', function($q) use ($acteurs){
+                $q->where(function($query) use ($acteurs) {
+                    foreach ($acteurs as $acteur) {
+                        $query->orWhere('nom', $acteur)
+                              ->orWhere('prenom', $acteur)
+                              ->orWhere(DB::raw("CONCAT(prenom, ' ', nom)"), $acteur);
+                    }
+                });
+            });
+        }
+
+        if($realisateurs) {
+            $films = $films->whereHas('realisateurs', function($q) use ($realisateurs) {
+                $q->where(function($query) use ($realisateurs) {
+                    foreach ($realisateurs as $realisateur) {
+                        $query->orWhere('nom', $realisateur)
+                              ->orWhere('prenom', $realisateur)
+                              ->orWhere(DB::raw("CONCAT(prenom, ' ', nom)"), $realisateur);
+                    }
+                });
+            });
+        }
+
+        if($categories){
+
+            $films = $films->whereHas('categories', function($q) use ($categories){
+                $q->whereIn('titre', $categories);
+            });
         }
 
         return FilmListResource::collection($films->paginate($per_page));
