@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AppConfigurationSeeder::class,
             CategorieSeeder::class,
             ActeurSeeder::class,
-            RealisateurSeeder::class
+            RealisateurSeeder::class,
+            FilmSeeder::class
         ]);
     }
 }

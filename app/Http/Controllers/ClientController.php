@@ -7,59 +7,46 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->checkGate('client_access');
+
+        return ClientResource::collection($request->per_page ? Client::paginate($request->per_page) : Client::with(['categorie', 'devise', 'mode_reglement', 'adresse_facturation', 'adresse_livraison', 'user', 'origine', 'mode_facturation'])->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreClientRequest $request)
     {
-        //
+        $client = Client::create($request->all());
+
+        return (new ClientResource($client))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Client $client)
     {
-        //
+        $this->checkGate('client_show');
+
+        return new ClientResource($client->load(['categorie', 'devise', 'mode_reglement', 'adresse_facturation', 'adresse_livraison', 'user', 'origine', 'mode_facturation']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Client $client)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+
+        $client->update($request->all());
+        // dd($request->all());
+
+        return (new ClientResource($client))
+            ->response()
+            ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Client $client)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Client $client)
     {
-        //
+        $this->checkGate('client_delete');
+
+        $client->delete();
+
+        return response('Suppression effectuee', Response::HTTP_NO_CONTENT);
     }
 }

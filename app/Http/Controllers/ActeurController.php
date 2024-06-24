@@ -24,14 +24,19 @@ class ActeurController extends Controller
     public function search(SearchActeurRequest $request)
     {
 
-        $titre = $request->titre;
+        $nom = $request->nom;
+        $prenom = $request->prenom;
         $per_page = ($request->per_page > 100) ? 10 : $request->per_page;
 
         $acteurs = Acteur::query()->orderByDesc('created_at');
 
-        if($titre){
+        if($nom){
 
-            $acteurs = $acteurs->where('titre', 'LIKE', '%'.$titre.'%');
+            $acteurs = $acteurs->where('nom', 'LIKE', '%'.$nom.'%');
+        }
+
+        if($prenom){
+            $acteurs = $acteurs->where('prenom', 'LIKE', '%'.$prenom.'%');
         }
 
         return ActeurResource::collection($acteurs->paginate($per_page));

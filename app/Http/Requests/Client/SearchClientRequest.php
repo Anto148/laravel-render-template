@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Acteur;
+namespace App\Http\Requests\Client;
 
-use App\Traits\Requests\Requestable;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreActeurRequest extends FormRequest
+class SearchClientRequest extends FormRequest
 {
-    use Requestable;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Gate::allows('acteur_create');
+        return false;
     }
 
     /**
@@ -25,8 +22,7 @@ class StoreActeurRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
+            //
         ];
     }
 }

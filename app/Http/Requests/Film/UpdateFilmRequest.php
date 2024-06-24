@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Acteur;
+namespace App\Http\Requests\Film;
 
 use App\Traits\Requests\Requestable;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreActeurRequest extends FormRequest
+class UpdateFilmRequest extends FormRequest
 {
     use Requestable;
     /**
@@ -14,7 +14,7 @@ class StoreActeurRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('acteur_create');
+        return Gate::allows('film_edit');
     }
 
     /**
@@ -25,8 +25,11 @@ class StoreActeurRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
+            'titre' => 'nullable|string|max:255',
+            'synopsis' => 'nullable|string|max:255',
+            'duree' => 'nullable|integer',
+            'bande_annonce'=> 'nullable|string|max:255',
+            'cover' => 'nullable|image|max:7000',
         ];
     }
 }

@@ -4,6 +4,7 @@ use App\Models\Categorie;
 use App\Models\Realisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FilmController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActeurController;
@@ -45,12 +46,17 @@ Route::post('categories/search', [CategorieController::class, 'search'])->name('
 // Acteurs
 Route::get('acteurs', [ActeurController::class, 'index'])->name('acteurs.index');
 Route::get('acteurs/{auteur}', [ActeurController::class, 'show'])->name('acteurs.show');
-Route::post('acteurs/search', [ActeurController::class, 'acteurs_search'])->name('acteurs.search');
+Route::post('acteurs/search', [ActeurController::class, 'search'])->name('acteurs.search');
 
 // Realisateurs
 Route::get('realisateurs', [RealisateurController::class, 'index'])->name('realisateurs.index');
 Route::get('realisateurs/{realisateur}', [RealisateurController::class, 'show'])->name('realisateurs.show');
 Route::post('realisateurs/search', [RealisateurController::class, 'search'])->name('realisateurs.search');
+
+//Films
+Route::get('films', [FilmController::class, 'index'])->name('films.index');
+Route::get('films/{film}', [FilmController::class, 'show'])->name('films.show');
+Route::post('films/search', [FilmController::class, 'search'])->name('films.search');
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -58,6 +64,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // User
     Route::post('users/search', [UsersController::class, 'search'])->name('users.search');
     Route::apiResource('users', UsersController::class);
+
+    // Categorie
+    Route::apiResource('categories', CategorieController::class)->except(['index','show']);
+
+    // Acteur
+    Route::apiResource('acteurs', ActeurController::class)->except(['index','show']);
+
+    // Realisateur
+    Route::apiResource('realisateurs', RealisateurController::class)->except(['index','show']);
+
+    // Film
+    Route::apiResource('films', FilmController::class)->except(['index','show']);
 
     // Roles
     Route::apiResource('roles', RoleController::class);

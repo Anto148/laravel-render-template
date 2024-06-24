@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'telephone',
         'email',
         'password',
+        'cagnotte',
         'is_active',
         'can_login',
         'otp',
@@ -79,6 +80,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function getAvatarAttribute()
     {
       return $this->getFirstMedia(User::AVATAR_COLLECTION_NAME);
+    }
+
+    public function client(){
+
+        return $this->hasOne(Client::class);
     }
 
     public function roles()

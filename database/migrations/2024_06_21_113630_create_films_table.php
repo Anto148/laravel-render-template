@@ -16,17 +16,35 @@ return new class extends Migration
             $table->string('titre')->nullable();
             $table->text('synopsis')->nullable();
             $table->string('duree')->nullable();
-            $table->string('cover')->nullable();
+            $table->string('cover_url')->nullable();
             $table->string('bande_annonce')->nullable();
-            $table->date('date_sortie')->nullable();
+            $table->string('date_sortie')->nullable();
             $table->integer('limite_age')->nullable();
             $table->float('moyenne_note')->nullable();
             $table->string('audio')->nullable();
-            $table->foreignId('realisateur_id')->constrained('realisateurs');
-            $table->foreignId('acteurs_id')->constrained('acteurs');
-            $table->foreignId('categorie_id')->constrained('categories');
+            // $table->foreignId('realisateur_id')->constrained('realisateurs');
+            // $table->foreignId('acteurs_id')->constrained('acteurs');
+            // $table->foreignId('categorie_id')->constrained('categories');
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('film_realisateur', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('film_id')->constrained()->onDelete('cascade');
+            $table->foreignId('realisateur_id')->constrained()->onDelete('cascade');
+        });
+
+        Schema::create('film_acteur', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('film_id')->constrained()->onDelete('cascade');
+            $table->foreignId('acteur_id')->constrained()->onDelete('cascade');
+        });
+
+        Schema::create('categorie_film', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('film_id')->constrained()->onDelete('cascade');
+            $table->foreignId('categorie_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -35,6 +53,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('categorie_film');
+        Schema::dropIfExists('film_acteur');
+        Schema::dropIfExists('film_realisateur');
         Schema::dropIfExists('films');
     }
 };

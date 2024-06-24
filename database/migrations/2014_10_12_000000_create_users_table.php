@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
 
+            $table->float('cagnotte')->default(0);
+
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('can_login')->default(true);
@@ -31,7 +33,7 @@ return new class extends Migration
 
             $table->string('account_set_token')->nullable();
             $table->timestamp('account_set_token_created_at')->nullable();
-            
+
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

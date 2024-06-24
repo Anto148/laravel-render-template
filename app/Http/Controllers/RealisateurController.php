@@ -22,14 +22,19 @@ class RealisateurController extends Controller
     public function search(SearchRealisateurRequest $request)
     {
 
-        $titre = $request->titre;
+        $nom = $request->nom;
+        $prenom = $request->prenom;
         $per_page = ($request->per_page > 100) ? 10 : $request->per_page;
 
         $realisateurs = Realisateur::query()->orderByDesc('created_at');
 
-        if($titre){
+        if($nom){
 
-            $realisateurs = $realisateurs->where('titre', 'LIKE', '%'.$titre.'%');
+            $realisateurs = $realisateurs->where('nom', 'LIKE', '%'.$nom.'%');
+        }
+
+        if($prenom){
+            $realisateurs = $realisateurs->where('prenom', 'LIKE', '%'.$request->prenom.'%');
         }
 
         return RealisateurResource::collection($realisateurs->paginate($per_page));

@@ -19,6 +19,7 @@ class UserShowResource extends JsonResource
             'nom' => $this->nom,
             'prenom' => $this->prenom,
             'fullname' => $this->fullname,
+            'cagnotte' => $this->cagnotte,
             'email' => $this->email,
             'telephone' => $this->telephone,
             'roles' => $this->roles,

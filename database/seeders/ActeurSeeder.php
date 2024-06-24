@@ -14,7 +14,7 @@ class ActeurSeeder extends Seeder
     public function run(): void
     {
         $acteurs = [
-            ['nom' => 'DiCaprio', 'prenom' => 'Leonardo'],
+            ['nom' => 'DiCaprio', 'prenom' => 'Leonardo' ],
             ['nom' => 'Pitt', 'prenom' => 'Brad'],
             ['nom' => 'Streep', 'prenom' => 'Meryl'],
             ['nom' => 'Hanks', 'prenom' => 'Tom'],

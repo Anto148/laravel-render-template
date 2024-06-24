@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('created_by_id')->nullable()->references('id')->on('users')->constrained();
             $table->foreignId('type_projection_id')->constrained('type_projections')->onDelete('cascade')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

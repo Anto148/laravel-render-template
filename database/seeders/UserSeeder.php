@@ -16,14 +16,14 @@ class UserSeeder extends Seeder
     {
         $admins = [
             [
-                "nom" => "John",
-                "prenom" => "Doe",
-                "email" => "admin@mail.test",
-                "telephone" => "123456789",
-                "is_active" => true,
-                "password" => bcrypt("password"),
-                "can_login" => true,
-                "email_verified_at" => now()
+                'nom' => 'John',
+                'prenom' => 'Doe',
+                'email' => 'admin@mail.test',
+                'telephone' => '123456789',
+                'is_active' => true,
+                'password' => bcrypt('password'),
+                'can_login' => true,
+                'email_verified_at' => now()
             ]
         ];
 
@@ -31,14 +31,43 @@ class UserSeeder extends Seeder
 
         $clients = [
             [
-                "nom" => "Jack",
-                "prenom" => "Doe",
-                "email" => "client@mail.test",
-                "telephone" => "323456789",
-                "is_active" => true,
-                "password" => bcrypt("password"),
-                "can_login" => true,
-                "email_verified_at" => now()
+                'nom' => 'Jack',
+                'prenom' => 'Doe',
+                'email' => 'client@mail.test',
+                'telephone' => '523456709',
+                'is_active' => true,
+                'password' => bcrypt('password'),
+                'can_login' => true,
+                'email_verified_at' => now(),
+                'client' => [
+                    'cagnotte' => 2000,
+                ]
+                ],
+            [
+                'nom' => 'Jean',
+                'prenom' => 'ADJALLA',
+                'email' => 'jean@mail.test',
+                'telephone' => '623456789',
+                'is_active' => true,
+                'password' => bcrypt('password'),
+                'can_login' => true,
+                'email_verified_at' => now(),
+                'client' => [
+                    'cagnotte' => 1000,
+                ]
+                ],
+            [
+                'nom' => 'QUENUM',
+                'prenom' => 'Lydia',
+                'email' => 'lydia@mail.test',
+                'telephone' => '927456789',
+                'is_active' => true,
+                'password' => bcrypt('password'),
+                'can_login' => true,
+                'email_verified_at' => now(),
+                'client' => [
+                    'cagnotte' => 1000,
+                ]
             ]
         ];
         $this->createClients($clients);
@@ -68,9 +97,9 @@ class UserSeeder extends Seeder
     {
         foreach ($clients as $client) {
 
-            $user = User::create($client);
-
-            $user->roles()->attach(Role::where('alias', Role::CLIENT_ROLE_ALIAS)->first()->id);
+            $user = User::create(collect($client)->except('client')->toArray());
+            $user->client()->create($client['client']);
+            $user->roles()->attach(Role::where('alias', Role::CLIENT_ROLE_ALIAS)->first()?->id);
         }
     }
 }
