@@ -44,6 +44,9 @@ class PermissionSeeder extends Seeder
             // ...$this->createPermissions('film', ['access', 'show','search'], $everybody),
             ...$this->createPermissions('film', ['create', 'edit', 'delete'], $admins),
 
+            ...$this->createPermissions('projection', ['access', 'show','search'], $everybody),
+            ...$this->createPermissions('projection', ['create', 'edit', 'delete'], $admins),
+
         ];
 
         Permission::insert($permissions);

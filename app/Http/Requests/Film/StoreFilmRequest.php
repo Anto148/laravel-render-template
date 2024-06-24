@@ -27,9 +27,10 @@ class StoreFilmRequest extends FormRequest
         return [
             'titre' => 'required|string|max:255',
             'synopsis' => 'nullable|string|max:255',
-            'duree' => 'nullable|integer',
+            'duree' => 'nullable|string|max:255',
             'bande_annonce'=> 'nullable|string|max:255',
             'cover' => 'nullable|image|max:7000',
+            'cover_url' => 'nullable|string|max:255',
         ];
     }
 }

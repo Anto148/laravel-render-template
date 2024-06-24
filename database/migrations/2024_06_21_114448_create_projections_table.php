@@ -16,10 +16,10 @@ return new class extends Migration
             $table->date('date_projection')->nullable();
             $table->time('heure_projection')->nullable();
             $table->boolean('en_3d')->nullable();
-            $table->foreignId('film_id')->constrained('films')->onDelete('cascade')->nullable();
-            $table->foreignId('salle_id')->constrained('salles')->onDelete('cascade')->nullanble();
+            $table->foreignId('film_id')->nullable()->references('id')->on('films')->onDelete('cascade');
+            $table->foreignId('salle_id')->nullable()->references('id')->on('salles')->onDelete('cascade');
             $table->foreignId('created_by_id')->nullable()->references('id')->on('users')->constrained();
-            $table->foreignId('type_projection_id')->constrained('type_projections')->onDelete('cascade')->nullable();
+            $table->foreignId('type_projection_id')->nullable()->references('id')->on('type_projections')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

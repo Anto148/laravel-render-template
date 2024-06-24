@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             CategorieSeeder::class,
             ActeurSeeder::class,
             RealisateurSeeder::class,
-            FilmSeeder::class
+            FilmSeeder::class,
+            TypeProjectionSeeder::class,
+            ProjectionSeeder::class
         ]);
     }
 }

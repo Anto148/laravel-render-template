@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Film;
+namespace App\Http\Requests\TypeProjection;
 
 use App\Traits\Requests\Requestable;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateFilmRequest extends FormRequest
+class StoreTypeProjectionRequest extends FormRequest
 {
     use Requestable;
     /**
@@ -14,7 +14,7 @@ class UpdateFilmRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('film_edit');
+        return Gate::allows('type_projection_create');
     }
 
     /**
@@ -25,12 +25,9 @@ class UpdateFilmRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titre' => 'nullable|string|max:255',
-            'synopsis' => 'nullable|string|max:255',
-            'duree' => 'nullable|string|max:255',
-            'bande_annonce'=> 'nullable|string|max:255',
-            'cover' => 'nullable|image|max:7000',
-            'cover_url' => 'nullable|string|max:255',
+            'nom' => 'required|string|max:255',
+            'prix_enfant' => 'required|integer',
+            'prix_adulte' => 'required|integer',
         ];
     }
 }

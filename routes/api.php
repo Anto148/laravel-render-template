@@ -13,6 +13,8 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RealisateurController;
 use App\Http\Controllers\AppConfigurationController;
+use App\Http\Controllers\ProjectionController;
+use App\Http\Controllers\TypeProjectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +60,17 @@ Route::get('films', [FilmController::class, 'index'])->name('films.index');
 Route::get('films/{film}', [FilmController::class, 'show'])->name('films.show');
 Route::post('films/search', [FilmController::class, 'search'])->name('films.search');
 
+// Type Projections
+Route::get('type-projections',[TypeProjectionController::class, 'index'])->name('type-projections.index');
+Route::get('type-projections/{type_projection}', [TypeProjectionController::class, 'show'])->name('type-projections.show');
+Route::post('type-projections/search', [TypeProjectionController::class, 'search'])->name('type-projections.search');
+
+// Projection
+Route::get('projections', [ProjectionController::class, 'index'])->name('projections.index');
+Route::get('projections/{projection}', [ProjectionController::class, 'show'])->name('projections.show');
+Route::post('projections/search', [ProjectionController::class, 'search'])->name('projections.search');
+
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -76,6 +89,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // Film
     Route::apiResource('films', FilmController::class)->except(['index','show','search']);
+
+    // Type Projection
+    Route::apiResource('type-projections', TypeProjectionController::class)->except(['index','show','search']);
+
+    // Projection
+    Route::apiResource('projections', ProjectionController::class)->except('index','show');
 
     // Roles
     Route::apiResource('roles', RoleController::class);
