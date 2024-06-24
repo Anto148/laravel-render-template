@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('realisateurs', RealisateurController::class)->except(['index','show']);
 
     // Film
-    Route::apiResource('films', FilmController::class)->except(['index','show']);
+    Route::apiResource('films', FilmController::class)->except(['index','show','search']);
 
     // Roles
     Route::apiResource('roles', RoleController::class);

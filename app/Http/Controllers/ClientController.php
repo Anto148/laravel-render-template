@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Resources\Client\ClientResource;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\Client\StoreClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
 
 class ClientController extends Controller
 {
@@ -11,7 +15,7 @@ class ClientController extends Controller
     {
         $this->checkGate('client_access');
 
-        return ClientResource::collection($request->per_page ? Client::paginate($request->per_page) : Client::with(['categorie', 'devise', 'mode_reglement', 'adresse_facturation', 'adresse_livraison', 'user', 'origine', 'mode_facturation'])->get());
+        return ClientResource::collection($request->per_page ? Client::paginate($request->per_page) : Client::with(['user'])->get());
     }
 
     public function store(StoreClientRequest $request)
@@ -27,14 +31,13 @@ class ClientController extends Controller
     {
         $this->checkGate('client_show');
 
-        return new ClientResource($client->load(['categorie', 'devise', 'mode_reglement', 'adresse_facturation', 'adresse_livraison', 'user', 'origine', 'mode_facturation']));
+        return new ClientResource($client->load(['user']));
     }
 
     public function update(UpdateClientRequest $request, Client $client)
     {
 
         $client->update($request->all());
-        // dd($request->all());
 
         return (new ClientResource($client))
             ->response()

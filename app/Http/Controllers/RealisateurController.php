@@ -53,7 +53,7 @@ class RealisateurController extends Controller
 
     public function show(Realisateur $realisateur)
     {
-        $this->checkGate('realisateur_show');
+        // $this->checkGate('realisateur_show');
 
         return new RealisateurResource($realisateur);
     }

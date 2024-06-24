@@ -55,7 +55,7 @@ class ActeurController extends Controller
 
     public function show(Acteur $acteur)
     {
-        $this->checkGate('acteur_show');
+        // $this->checkGate('acteur_show');
 
         return new ActeurResource($acteur);
     }

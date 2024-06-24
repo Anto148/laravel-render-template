@@ -8,13 +8,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SearchFilmRequest extends FormRequest
 {
-    use Requestable;
+    // use Requestable:;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Gate::allows('film_search');
+        return true;
     }
 
     /**

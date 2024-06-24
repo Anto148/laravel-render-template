@@ -70,7 +70,7 @@ class FilmController extends Controller
 
     public function show(Film $film)
     {
-        $this->checkGate('film_show');
+        // $this->checkGate('film_show');
 
         return new FilmShowResource($film);
     }

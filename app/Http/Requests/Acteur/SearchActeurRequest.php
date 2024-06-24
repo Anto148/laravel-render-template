@@ -12,7 +12,7 @@ class SearchActeurRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Gate::allows('acteur_create');
+        return true;
     }
 
     /**

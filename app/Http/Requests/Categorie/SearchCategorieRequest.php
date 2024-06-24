@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Gate;
 
 class SearchCategorieRequest extends FormRequest
 {
-    use Requestable;
+    // use Requestable;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Gate::allows('categorie_search');
+        return true;
     }
 
     /**
