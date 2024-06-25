@@ -26,6 +26,7 @@ class FilmListResource extends JsonResource
             'date_sortie' => $this->date_sortie,
             'cover_url' => $this->cover_url,
             'cover' => $this->cover,
+            'audio' => $this->audio,
             'bande_annonce' => $this->bande_annonce,
             'categorie_id' => $this->category_id,
             'categories' => CategorieResource::collection($this->whenLoaded('categories')),

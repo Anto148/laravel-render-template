@@ -26,6 +26,7 @@ class FilmShowResource extends JsonResource
             'bande_annonce' => $this->bande_annonce,
             'cover_url' => $this->cover_url,
             'cover' => $this->cover,
+            'audio' => $this->audio,
             'categorie_id' => $this->category_id,
             'categories' => CategorieResource::collection($this->whenLoaded('categories')),
             'realisateurs' => RealisateurResource::collection($this->whenLoaded('realisateurs')),
