@@ -83,18 +83,38 @@ class ProjectionController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
     public function projectionsDeLaSemaine()
     {
         $today = now();
         $startOfWeek = $today->startOfWeek()->addDays(1); // Commence le mardi
-        $endOfWeek = $startOfWeek->copy()->addDays(5); // Se termine le vendredi
+        $endOfWeek = $startOfWeek->copy()->addDays(5); // Se termine le dimanche
 
-        $projections = Projection::with(['film', 'typeProjection'])
+        // Fetch projections within the week grouped by day
+        $projections = Projection::with(['film', 'salle', 'typeProjection'])
                                  ->whereBetween('date_projection', [$startOfWeek, $endOfWeek])
                                  ->orderBy('date_projection')
-                                 ->get();
+                                 ->get()
+                                 ->groupBy(function($date) {
+                                     return Carbon::parse($date->date_projection)->format('l'); // Group by day of the week
+                                 });
 
-        return ProjectionListResource::collection($projections);
+        // Check for overlapping projections on the same day
+        foreach ($projections as $day => $dayProjections) {
+            $dayProjections->each(function ($projection) use ($dayProjections) {
+                $overlaps = $dayProjections->filter(function ($otherProjection) use ($projection) {
+                    return $projection->id !== $otherProjection->id &&
+                           $projection->date_projection === $otherProjection->date_projection &&
+                           $projection->heure_projection === $otherProjection->heure_projection;
+                });
+                if ($overlaps->isNotEmpty()) {
+                    return response()->json([
+                        'message' => 'Multiple projections scheduled at the same time on ' . $projection->date_projection,
+                        'errors' => ['projection' => 'Overlapping projections detected']
+                    ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
+            });
+        }
+
+        return response()->json($projections);
     }
 }

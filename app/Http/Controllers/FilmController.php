@@ -108,7 +108,7 @@ class FilmController extends Controller
     {
         // $this->checkGate('film_show');
 
-        return new FilmShowResource($film);
+        return new FilmShowResource($film->load('realisateurs', 'acteurs', 'categories', 'avis'));
     }
 
 
