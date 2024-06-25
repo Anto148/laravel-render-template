@@ -8,13 +8,14 @@ use App\Http\Controllers\FilmController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ActeurController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RealisateurController;
-use App\Http\Controllers\AppConfigurationController;
 use App\Http\Controllers\ProjectionController;
+use App\Http\Controllers\RealisateurController;
 use App\Http\Controllers\TypeProjectionController;
+use App\Http\Controllers\AppConfigurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,12 @@ Route::get('projections', [ProjectionController::class, 'index'])->name('project
 Route::get('projections/{projection}', [ProjectionController::class, 'show'])->name('projections.show');
 Route::post('projections/search', [ProjectionController::class, 'search'])->name('projections.search');
 Route::post('projections/week',[ProjectionController::class, 'projectionsDeLaSemaine'])->name('projections.week');
+
+// Tickets
+Route::get('tickets', [TicketController::class, 'index'])->name('tickets.index');
+Route::get('tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+Route::post('tickets/search', [TicketController::class, 'search'])->name('tickets.search');
+Route::get('tickets/payment-confirmation', [TicketController::class, 'confirmPayment']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {

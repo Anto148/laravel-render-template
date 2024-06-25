@@ -35,7 +35,7 @@ class CategorieController extends Controller
 
         return CategorieResource::collection($categories->paginate($per_page));
     }
-    
+
 
     public function store(StoreCategorieRequest $request)
     {
@@ -49,7 +49,7 @@ class CategorieController extends Controller
 
     public function show(Categorie $categorie)
     {
-        $this->checkGate('categorie_show');
+        // $this->checkGate('categorie_show');
 
         return new CategorieResource($categorie);
     }
