@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Categorie;
-use App\Models\Realisateur;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\RoleController;
@@ -31,52 +28,69 @@ Route::get('test', function(){
 
     return 'test';
 });
+
 //Auth
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::delete('logout', [AuthController::class, 'logout'])->name('logout');
 
 // App Configurations
-Route::get('app-configurations', [AppConfigurationController::class, 'index'])->name('app-configurations.index');
-Route::get('app-configurations/{app_configuration}', [AppConfigurationController::class, 'show'])->name('app-configurations.show');
-Route::post('app-configurations/search', [AppConfigurationController::class, 'search'])->name('app-configurations.search');
+Route::controller(AppConfigurationController::class)->group(function () {
+    Route::get('app-configurations', 'index')->name('app-configurations.index');
+    Route::get('app-configurations/{app_configuration}', 'show')->name('app-configurations.show');
+    Route::post('app-configurations/search', 'search')->name('app-configurations.search');
+});
 
 // Categories
-Route::get('categories', [CategorieController::class, 'index'])->name('categories.index');
-Route::get('categories/{category}', [CategorieController::class, 'show'])->name('categories.show');
-Route::post('categories/search', [CategorieController::class, 'search'])->name('categories.search');
+Route::controller(CategorieController::class)->group(function () {
+    Route::get('categories', 'index')->name('categories.index');
+    Route::get('categories/{category}', 'show')->name('categories.show');
+    Route::post('categories/search', 'search')->name('categories.search');
+});
 
 // Acteurs
-Route::get('acteurs', [ActeurController::class, 'index'])->name('acteurs.index');
-Route::get('acteurs/{auteur}', [ActeurController::class, 'show'])->name('acteurs.show');
-Route::post('acteurs/search', [ActeurController::class, 'search'])->name('acteurs.search');
+Route::controller(ActeurController::class)->group(function () {
+    Route::get('acteurs', 'index')->name('acteurs.index');
+    Route::get('acteurs/{auteur}', 'show')->name('acteurs.show');
+    Route::post('acteurs/search', 'search')->name('acteurs.search');
+});
 
 // Realisateurs
-Route::get('realisateurs', [RealisateurController::class, 'index'])->name('realisateurs.index');
-Route::get('realisateurs/{realisateur}', [RealisateurController::class, 'show'])->name('realisateurs.show');
-Route::post('realisateurs/search', [RealisateurController::class, 'search'])->name('realisateurs.search');
+Route::controller(RealisateurController::class)->group(function () {
+    Route::get('realisateurs', 'index')->name('realisateurs.index');
+    Route::get('realisateurs/{realisateur}', 'show')->name('realisateurs.show');
+    Route::post('realisateurs/search', 'search')->name('realisateurs.search');
+});
 
 //Films
-Route::get('films', [FilmController::class, 'index'])->name('films.index');
-Route::get('films/{film}', [FilmController::class, 'show'])->name('films.show');
-Route::post('films/search', [FilmController::class, 'search'])->name('films.search');
+Route::controller(FilmController::class)->group(function () {
+    Route::get('films', 'index')->name('films.index');
+    Route::get('films/{film}', 'show')->name('films.show');
+    Route::post('films/search', 'search')->name('films.search');
+});
 
 // Type Projections
-Route::get('type-projections',[TypeProjectionController::class, 'index'])->name('type-projections.index');
-Route::get('type-projections/{type_projection}', [TypeProjectionController::class, 'show'])->name('type-projections.show');
-Route::post('type-projections/search', [TypeProjectionController::class, 'search'])->name('type-projections.search');
+Route::controller(TypeProjectionController::class)->group(function () {
+    Route::get('type-projections', 'index')->name('type-projections.index');
+    Route::get('type-projections/{type_projection}', 'show')->name('type-projections.show');
+    Route::post('type-projections/search', 'search')->name('type-projections.search');
+});
 
 // Projection
-Route::get('projections', [ProjectionController::class, 'index'])->name('projections.index');
-Route::get('projections/{projection}', [ProjectionController::class, 'show'])->name('projections.show');
-Route::post('projections/search', [ProjectionController::class, 'search'])->name('projections.search');
-Route::post('projections/week',[ProjectionController::class, 'projectionsDeLaSemaine'])->name('projections.week');
+Route::controller(ProjectionController::class)->group(function () {
+    Route::get('projections', 'index')->name('projections.index');
+    Route::get('projections/{projection}', 'show')->name('projections.show');
+    Route::post('projections/search', 'search')->name('projections.search');
+    Route::post('projections/week', 'projectionsDeLaSemaine')->name('projections.week');
+});
 
 // Tickets
-Route::get('tickets', [TicketController::class, 'index'])->name('tickets.index');
-Route::get('tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
-Route::post('tickets/search', [TicketController::class, 'search'])->name('tickets.search');
-Route::get('tickets/payment-confirmation', [TicketController::class, 'confirmPayment']);
+Route::controller(TicketController::class)->group(function () {
+    Route::get('tickets', 'index')->name('tickets.index');
+    Route::get('tickets/{ticket}', 'show')->name('tickets.show');
+    Route::post('tickets/search', 'search')->name('tickets.search');
+    Route::get('tickets/payment-confirmation', 'confirmPayment')->name('tickets.payment-confirmation');
+});
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -111,6 +125,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Permmission
     Route::apiResource('permissions', PermissionController::class);
     Route::post('permissions/search', [PermissionController::class, 'search'])->name('permissions.search');
-
 
 });

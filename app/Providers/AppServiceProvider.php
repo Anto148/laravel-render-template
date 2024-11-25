@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
                 return base_path().'/..';
             });
         }
+        
+        if (env('APP_ENV') == 'production') {
+            $this->app['request']->server->set('HTTPS', true);
+        }
 
         Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
             $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);

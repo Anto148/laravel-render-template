@@ -19,7 +19,7 @@ use App\Http\Requests\Auth\ChangePasswordRequest;
 
 class AuthController extends Controller
 {
-    protected function register(RegisterRequest $request) : JsonResponse
+    public function register(RegisterRequest $request) : JsonResponse
     {
         $user = User::create($request->all());
 
